@@ -1,0 +1,1 @@
+python train.py -v "HLFSR_X4_DIV2K" -p finetune -c 0 -e 1 --train_yaml "train_HLFSR_X4_DIV2K.yaml"
