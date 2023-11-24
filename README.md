@@ -6,22 +6,14 @@
 ## Preparation
 - Step 1, Please download [Omni-SR](https://github.com/Francis0625/Omni-SR) first, and build the experimental environment step by step refer to the official repository of the readme.txt.
 
-
-- Step 2, Download pretrained models, train logs, and copy them to ```./Omni-SR/train_logs/```:
-
-  |  Settings   | CKPT name | CKPT url|
-  |  ----  | ----  | --- |
-  | DIV2K $\times 3$  | HLFSR_X3_DIV2K.zip | [Google driver]()|
-  | DIV2K $\times 4$  | HLFSR_X4_DIV2K.zip | [Google driver]()|
-
-- Step 3, Download this repo and put them in the folder corresponding to ```./Omni-SR/```:
+- Step 2, Download this repo and put them in the folder corresponding to ```./Omni-SR/```:
 
   **Clone this repo:**
   ```bash
-  git clone https://github.com/Francis0625/OmniSR.git
+  git clone https://github.com/DL-YHD/HFSR.git
   ```
 
-  Note: We provide our "env.json" file, you can directly use our "env.json" file, where we replace the absolute path with a relative path without modifying the data path.
+  Note: We provide our pretrained models, train logs and you can directly use our "env.json" file, where we replace the absolute path with a relative path without modifying the data path.
 
 ## Dependencies
 - PyTorch>1.10
