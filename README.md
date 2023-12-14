@@ -10,7 +10,7 @@
 
   **Clone this repo:**
   ```bash
-  git clone https://github.com/DL-YHD/HFSR.git
+  git clone https://github.com/DL-YHD/HADEM-SR.git
   ```
 
   Note: We provide our pretrained models, train logs and you can directly use our "env.json" file, where we replace the absolute path with a relative path without modifying the data path.
