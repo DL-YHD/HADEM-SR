@@ -180,10 +180,10 @@ class Tester(object):
                     temp_img = res[t,:,:,:]
                     psnr     = calculate_psnr(temp_img, hr[t,:,:,:])
                     ssim     = calculate_ssim(temp_img, hr[t,:,:,:])
-                    # print("PSNR is %.3f"%psnr)
-                    # temp_img = cv2.cvtColor(temp_img,cv2.COLOR_RGB2BGR)
-                    # i_name = names[t]
-                    # cv2.imwrite(os.path.join(save_dir,'{}.png'.format(i_name).replace('LRBI',version)),temp_img)
+                    print("PSNR is %.3f"%psnr)
+                    temp_img = cv2.cvtColor(temp_img,cv2.COLOR_RGB2BGR)
+                    i_name = names[t]
+                    cv2.imwrite(os.path.join(save_dir,'{}.png'.format(i_name).replace('LRBI',version)),temp_img)
                     total_num += 1
                     total_psnr += psnr
                     total_ssim += ssim
