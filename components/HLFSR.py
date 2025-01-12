@@ -66,7 +66,28 @@ class HLFSR(nn.Module):
         # x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
         x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'constant', 0)
         return x
+      
+    def sc_attention(self, x):
 
+        b, c, h, w = x.size()
+
+        v = x.reshape(b, c, -1)
+        q = v.clone()
+        k = v.clone()
+        
+        s_scores = torch.matmul(q.transpose(1, 2), k) / (h*w)  # (batch_size, HW, HW)
+        s_weights = torch.softmax(s_scores, dim=-1)  # (batch_size, HW, HW)
+        s_output = torch.matmul(v, s_weights)  # (batch_size, c, HW*HW)
+        s_output = s_output.reshape(b, c, h, w) # (batch_size, c, HW, HW)
+
+        c_scores = torch.matmul(q, k.transpose(1, 2)) / (c*c)  # (batch_size, seq_len, seq_len)
+        c_weights = torch.softmax(c_scores, dim=-1)  # (batch_size, seq_len, seq_len)
+        c_output = torch.matmul(c_weights, v)  # (batch_size, c, HW*HW)
+        c_output = c_output.reshape(b, c, h, w) # (batch_size, c, HW, HW)
+        
+        out = 0.5*x*s_output + 0.5*x*c_output
+        return out
+      
     def forward(self, x):
         H, W = x.shape[2:] # x = [B, 3, 64, 64]
 
@@ -79,6 +100,9 @@ class HLFSR(nn.Module):
         # residual = torch.add(residual, residual_aux) # [B, 64, 64, 64] -> [B, 64, 64, 64]
         residual = torch.mul(residual, residual_aux) # [B, 64, 64, 64] -> [B, 64, 64, 64]
 
+        # if residual.shape[2] == residual.shape[3]: # H==W?
+        #     residual = self.sc_attention(residual) 
+      
         out     = self.residual_layer(residual) # [B, 64, 64, 64] -> [B, 64, 64, 64]
 
         # origin
